@@ -1,0 +1,37 @@
+{
+  "extends": "airbnb/base",
+  "rules": {
+    "no-console": 0,
+    "indent": ["error", 4],
+    "key-spacing": ["error", {
+      "align": "colon"
+    }],
+    "camelcase": 0,
+    "no-continue": 0,
+    "no-restricted-syntax": [
+      "error",
+      "LabeledStatement",
+      "WithStatement"
+    ],
+    "guard-for-in": 0,
+    "no-param-reassign": ["error", { "props": false }],
+    "no-use-before-define": ["error", { "functions": false, "classes": true }],
+    "class-method-use-this": 0,
+    "no-bitwise": ["error", { "allow": ["&", "|"] }],
+    "no-multi-spaces": 0,
+    "no-plusplus": 0,
+    "no-underscore-dangle": 0,
+    "prefer-destructuring": 0,
+    "no-throw-literal": 0,
+    "no-await-in-loop": 0,
+    "class-methods-use-this": 0,
+    "max-len": ["error", { "code": 120, "ignoreUrls": true }],
+    "implicit-arrow-linebreak": 0,
+    "eol-last":0,
+    "REVIEW-ITEMS-BELOW-LATER": 0,
+    "no-path-concat": 0,
+    "prefer-template": 0,
+    "array-callback-return": 0,
+    "linebreak-style": 0
+  }
+}

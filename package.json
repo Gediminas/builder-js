@@ -1,0 +1,26 @@
+{
+  "name": "builder-2020",
+  "version": "1.0.0",
+  "description": "Builder 2020 (node, express, socket.io, vue)",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/gdsx/builder-2020.git"
+  },
+  "keywords": [
+    "cicd",
+    "ci/cd",
+    "building",
+    "compiling",
+    "process-management"
+  ],
+  "author": "Gediminas Luzys",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/gdsx/builder-2020/issues"
+  },
+  "homepage": "https://gitlab.com/gdsx/builder-2020#readme"
+}

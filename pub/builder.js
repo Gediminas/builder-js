@@ -28,9 +28,22 @@ function connect(reconnect = false) {
     var socket = io.connect();
     console.log('Socket connected');
 
+    vm.connection_status = 'ok';
+    vm.connection_text   = 'Connected';
+    setTimeout(function() {
+        vm.connection_status = '';
+        vm.connection_text   = '';
+    }, 3000);
+
+    socket.emit('get-all');
+
+    socket.on('get-all-data', (data) => {
+        console.log('get-all-data', data);
+        vm.products = data.products;
+    });
+
     socket.on('task-added', (data) => {
         console.log('task-added', data);
-        socket.emit('back', {test2: 'test2'});
     });
 
     // socket.emit = (event, param) => {

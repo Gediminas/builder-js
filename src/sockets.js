@@ -8,10 +8,17 @@ const init = (server) => {
 
     server_io.on('connection', (socket) => {
         console.log(`>>>> gui: Client connected: ${socket.conn.remoteAddress}`.yellow)
-        socket.emit('task-added', {test: 'test'});
+        //socket.emit('task-added', {test: 'test'});
 
-        socket.on('back', (data) => {
-            console.log('back', data);
+        socket.on('get-all', (data) => {
+            console.log('get-all', data);
+            socket.emit('get-all-data', {
+                products: [
+                    { id: 'prod1', status: null, duration: '120', debug: 'debug info' },
+                    { id: 'prod2', status: null, duration: '',    debug: '' },
+                    { id: 'prod3', status: null, duration: '',    debug: '' },
+                    { id: 'prod4', status: null, duration: '',    debug: '' },
+                ]});
         });
     });
 };

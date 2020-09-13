@@ -20,6 +20,7 @@ const init = (server) => {
 
         socket.on('add_task', (data) => {
             console.log('add_task', data);
+            core.addTask(data.product_id, {status: 'N/A'});
         });
     });
 };

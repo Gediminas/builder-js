@@ -60,13 +60,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="row" v-for="product in products" :id = "`row_${product.id}`" :product_id = "product.id">   <td class="cell actions">
+        <tr class="row" v-for="product in products" :product_id = "`row_${product.product_id}`" :product_id = "product.id">   <td class="cell actions">
             <button class="btn btn_addjob"
-                    v-on:click="queue_task(product.id);">
+                    v-on:click="add_task(product.product_id);">
               +
             </button>
           </td>
-          <td class="cell">{{ product.id }}</td>
+          <td class="cell">{{ product.product_id }}</td>
           <td class="cell">{{ product.status }}</td>
           <td class="cell duration">{{ product.duration }}</td>
           <td class="cell debug">{{ product.debug }}</td>

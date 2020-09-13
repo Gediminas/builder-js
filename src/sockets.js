@@ -1,4 +1,5 @@
 const io = require('socket.io');
+const core = require('./pool.js');
 
 let server_io = null;
 
@@ -13,12 +14,12 @@ const init = (server) => {
         socket.on('request-products', (data) => {
             console.log('request-products', data);
             socket.emit('update-products', {
-                products: [
-                    { id: 'prod1', status: null, duration: '120', debug: 'debug info' },
-                    { id: 'prod2', status: null, duration: '',    debug: '' },
-                    { id: 'prod3', status: null, duration: '',    debug: '' },
-                    { id: 'prod4', status: null, duration: '',    debug: '' },
-                ]});
+                products: core.getProducts(),
+            });
+        });
+
+        socket.on('add_task', (data) => {
+            console.log('add_task', data);
         });
     });
 };

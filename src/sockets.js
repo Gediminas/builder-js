@@ -10,9 +10,9 @@ const init = (server) => {
         console.log(`>>>> gui: Client connected: ${socket.conn.remoteAddress}`.yellow)
         //socket.emit('task-added', {test: 'test'});
 
-        socket.on('get-all', (data) => {
-            console.log('get-all', data);
-            socket.emit('get-all-data', {
+        socket.on('request-products', (data) => {
+            console.log('request-products', data);
+            socket.emit('update-products', {
                 products: [
                     { id: 'prod1', status: null, duration: '120', debug: 'debug info' },
                     { id: 'prod2', status: null, duration: '',    debug: '' },

@@ -35,9 +35,9 @@ function connect(reconnect = false) {
         vm.connection_text   = '';
     }, 3000);
 
-    socket.emit('get-all');
+    socket.emit('request-products');
 
-    socket.on('get-all-data', (data) => {
+    socket.on('update-products', (data) => {
         console.log('get-all-data', data);
         vm.products = data.products;
     });

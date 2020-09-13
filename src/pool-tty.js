@@ -27,17 +27,17 @@ const log = (param, ...args) => {
     args.unshift(colorFnc(param.task.uid))
     args.unshift(colorFnc(param.task.product_id))
   }
-  console.log(sys.timeToString(param.time).grey, ...args)
+  console.log(...args)
 }
 
-pool.on('initialized',   param => log(param, '>> tty: Initialized'.bgGreen))
+//pool.on('initialized',   param => log(param, '>> tty: Initialized'.bgGreen))
 pool.on('error',         param => log(param, `>> tty: ERROR: ${param.msg} ${param.error}`.bgWhite.red))
 pool.on('task-starting', param => log(param, '>> tty: Starting'.bgGreen))
 
 pool.on('task-started',  param => log(param,
   `>> tty: Started: pid=${param.task.pid}`.bgGreen))
 
-pool.on('task-added',      param => log(param, '>> tty: Added'.bgGreen))
+//pool.on('task-added',      param => log(param, '>> tty: Added'.bgGreen))
 pool.on('task-removed',    param => log(param, '>> tty: Removed'.bgRed))
 pool.on('task-killing',       param => log(param, '>> tty: Killing'.bgRed))
 pool.on('task-killed', param => log(param, '>> tty: Killed'.bgRed))

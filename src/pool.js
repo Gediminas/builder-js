@@ -4,14 +4,14 @@ const sys = require('./sys_util')
 
 class Pool extends events {
   initialize(impl, products, cfg) {
+    console.note('core: Initializing')
     this.products = products
     this.waitingTasks = []
     this.activeTasks = []
     this.maxWorkers = cfg.maxWorkers
     this.impl = impl
-    console.log('init started')
     this.emit('initialized', { cfg })
-    console.log('init finished')
+    console.note('core: Initialized');
   }
 
   addTask(productId, taskData) {
@@ -30,12 +30,6 @@ class Pool extends events {
       if (this.waitingTasks[i].uid === taskUid) {
         const task = this.waitingTasks.splice(i, 1)[0]
         this.emit('task-removed', { task })
-        return
-      }
-    }
-    for (const task of this.activeTasks) {
-      if (task.uid === taskUid) {
-        this.emit('task-killing', { task })
         this.impl.killTask(task).then(() => {
           this.emit('task-killed', { task })
         }).catch((error) => {

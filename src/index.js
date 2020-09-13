@@ -8,15 +8,17 @@ require('./pool-log.js');
 // require('./pool-gui.js');
 require('colors');
 const sockets = require('./sockets.js');
+const log = require('./utils/log.js');
 
 const productLoader = require('./loaders/product_loader.js');
 const configLoader = require('./loaders/config_loader.js');
 
-const cfg = configLoader.data.appConfig;
+log.init();
 
-console.log('----------------------------------------------------------'.blue);
-console.log('> CONFIG:'.blue, JSON.stringify(cfg, null, 2).blue);
-console.log('----------------------------------------------------------'.blue);
+const cfg = configLoader.data.appConfig;
+console.note('----------------------------------------------------------'.blue);
+console.note('> CONFIG:', JSON.stringify(cfg, null, 2));
+console.note('----------------------------------------------------------'.blue);
 
 const init_http = (cfg) => {
     const app = express();

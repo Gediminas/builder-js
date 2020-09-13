@@ -8,7 +8,7 @@ const init = (server) => {
     console.log('Socket server started');
 
     server_io.on('connection', (socket) => {
-        console.log(`>>>> gui: Client connected: ${socket.conn.remoteAddress}`.yellow)
+        console.log(`Client connected: ${socket.conn.remoteAddress}`.yellow)
         //socket.emit('task-added', {test: 'test'});
 
         socket.on('request-products', (data) => {

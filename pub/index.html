@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, proxy-revalidate" />
+    <meta http-equiv="Surrogate-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <link rel="stylesheet" type="text/css" href="builder.css">
+    <title>Builder</title>
+  </head>
+
+  <body>
+    <div class="container" id="app">
+      <div id="connection_status" :status="connection_status">{{ connection_text }}</div>
+
+      <!-- <h3 class="text-center">Builder</h3> -->
+
+      <button type="button" id="btn_shutdown" class="btn debug" onclick="shutdown()"> Shutdown </button>
+
+      <hr />
+
+      <table id="table_tasks" class="table">
+        <thead>
+        <tr class="row-header">
+          <th>Actions</th>
+          <th>ID</th>
+          <th>Product</th>
+          <th>Status</th>
+          <th>Duration</th>
+          <th>DEBUG</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="row" v-for="task in tasks" :id = "`row_${task.id}`" :task_id = "task.id">   <td class="cell actions">
+            <button class="btn btn_addjob"
+                    v-on:click="remove_task(task.id);">
+              -
+            </button>
+          </td>
+          <td class="cell">{{ task.id }}</td>
+          <td class="cell">{{ task.product_id }}</td>
+          <td class="cell">{{ task.status }}</td>
+          <td class="cell duration">{{ task.duration }}</td>
+          <td class="cell debug">{{ task.debug }}</td>
+        </tbody>
+      </table>
+
+      <hr />
+
+      <table id="table_products" class="table">
+        <thead>
+        <tr class="row-header">
+          <th>Actions</th>
+          <th>ID</th>
+          <th>Status</th>
+          <th>Duration</th>
+          <th>DEBUG</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="row" v-for="product in products" :id = "`row_${product.id}`" :product_id = "product.id">   <td class="cell actions">
+            <button class="btn btn_addjob"
+                    v-on:click="queue_task(product.id);">
+              +
+            </button>
+          </td>
+          <td class="cell">{{ product.id }}</td>
+          <td class="cell">{{ product.status }}</td>
+          <td class="cell duration">{{ product.duration }}</td>
+          <td class="cell debug">{{ product.debug }}</td>
+        </tbody>
+      </table>
+
+      <hr />
+    </div>
+
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/vue"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="tools/axios.min.js"></script>
+    <script src="tools/vue.min.js"></script>
+    <script src="builder.js"></script>
+  </body>
+</html>

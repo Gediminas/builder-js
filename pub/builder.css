@@ -1,0 +1,172 @@
+body {
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: white;
+    color: black;
+}
+
+#connection_status {
+    display:       flow;
+    position:      absolute;
+    top:           2px;
+    right:         2px;
+    padding:       2px;
+    padding-left:  20px;
+    padding-right: 20px;
+    _font-size:     120%;
+}
+#connection_status[status="error"] {
+    background-color: #FF8888;
+}
+#connection_status[status="warn"] {
+    background-color: #FFFF88;
+}
+#connection_status[status="ok"]{
+    background-color: #88FF88; 
+}
+
+.table {
+    display: table;
+    border: 1px solid gray;
+    border-spacing: 0px;
+}
+
+.row_header {
+    display: table-row;
+    background-color: lightgray;
+
+    -padding-top: 12px;
+    -padding-bottom: 12px;
+    -text-align: left;
+    -color: black;
+}
+.row {
+    display: table-row;
+}
+.row:nth-child(odd) {
+    background-color: white; color: black;
+}
+.row:nth-child(even) {
+    background-color: #D0FFFF; color: black;
+}
+.row:hover {
+    background-color: lightblue;
+}
+.row:hover font {
+    color: black !important;
+}
+
+.cell_header {
+    border: 1px solid gray;
+    font-weight: bold;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.cell {
+    border: 1px dotted lightgrey;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: black;
+}
+
+.duration {
+    font-size: 10px;
+    color: gray;
+}
+
+.debug {
+    font-size: 8px;
+    color: red;
+}
+
+/* .date_small { */
+/* 	font-size: 8px; */
+/*   color: gray; */
+/* } */
+/* .time_large { */
+/* 	font-size: 10px; */
+/*   color: black; */
+/* } */
+/*  */
+/*  */
+/* .btn {  */
+/* 	---font-size: 12px; */
+/*   ---width: 20px; */
+/*   ---height: 20px; */
+/* 	_padding:0px;  */
+/* 	_margin: 0px; */
+/* } */
+/*  */
+/* .btn_addtask {  */
+/* 	background-color: lightgrey; */
+/* } */
+/* .btn_killtask_on {  */
+/* 	background-color: red; */
+/* } */
+/* .btn_killtask_off {  */
+/* 	background-color: lightgray; */
+/* } */
+/*  */
+/* #div_tasks { */
+/* 	min-height: 100px; */
+/* } */
+/*  */
+/*  */
+/* progress { */
+/*   height: 0.4em; */
+/*   width: 100%; */
+/*   text-align: center; */
+/*   vertical-align: top; */
+/*   position: relative;  */
+/*   top: 0; */
+/* } */
+/* /\* */
+/* progress:before { */
+/*   font-size: 0.8em; */
+/*   vertical-align: 0; */
+/*   content: attr(value) '%'; */
+/*  */
+/*   position: absolute; */
+/*   left:0; */
+/*   right:0; */
+/* } */
+/* *\/ */
+/*  */
+/* .tasks_time_to_now { */
+/*   text-align:right; */
+/* } */
+/*  */
+/*  */
+/* .status                  { text-align: center; min-width: 70px; text-decoration: none; color:black !important;} */
+/* .status[name="OK"]       { background-color: lightgreen  !important; } */
+/* .status[name="WARNING"]  { background-color: orange      !important; } */
+/* .status[name="ERROR"]    { background-color: red         !important; } */
+/* .status[name="HALTED"]   { background-color: magenta     !important; } */
+/* .status[name="WORKING"]  { background-color: yellow      !important; } */
+/* .status[name="QUEUED"]   { background-color: #ffffaa     !important; } */
+/* .status[name="N/A"]      { background-color: lightgray   !important; } */
+/*  */
+/*  */
+/* /\*=================*\/ */
+/*  */
+/* tr.tr_up_separator_forced  td { border-top-style:solid;  border-top-color:red; border-top-width: 2px; } */
+/* tr.tr_up_separator         td { border-top-style:solid;  border-top-color:black; border-top-width: 1px; } */
+/* td.AT_status_bld { border-style:solid;  border-color:yellow; border-width: 1px; background-color:yellow; } */
+/*  */
+/* input[class='task_added']    { height:20px; width:30px; font-size: 60%; margin:-5px; background-color: yellow; } */
+/* input[class='task_notadded'] { height:20px; width:30px; font-size: 60%; margin:-5px; background-color: lightgray; } */
+/*  */
+/* a.prod_name:link, a.prod_name:visited  { text-decoration: none; color:black; } */
+/* a.res_status:link,a.res_status:visited { text-decoration: none; color:black; } */
+/* a.AT_status:link, a.AT_status:visited  { text-decoration: none; color:black; } */
+/* a.AT_status_bld:link, a.AT_status_bld:visited  { text-decoration: none; color:darkgray; } */
+/* a.duration:link,  a.duration:visited   { text-decoration: none; color:black; } */
+/* a.time:link,      a.time:visited       { text-decoration: none; color:black; } */
+/*  */
+/* a.prod_name:hover  { text-decoration: underline; color:blue; } */
+/* a.res_status:hover { text-decoration: underline; color:blue; } */
+/* a.AT_status:hover  { text-decoration: underline; color:blue; } */
+/* a.AT_status_bld:hover  { text-decoration: underline; color:blue; } */
+/* a.duration:hover   { text-decoration: underline; color:blue; } */
+/* a.time:hover       { text-decoration: underline; color:blue; } */
+

@@ -81,7 +81,7 @@ pool.on('task-completed', (param) => {
   if (param.task.status === 'halting') {
     param.task.status = 'halted'
   } else {
-    assert(param.task.status === 'started')
+    //assert(param.task.status === 'started')
     param.task.status = 'finished'
   }
   param.task.data.status = param.task.result

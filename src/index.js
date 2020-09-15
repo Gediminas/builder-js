@@ -16,9 +16,9 @@ const configLoader = require('./loaders/config_loader.js');
 log.init();
 
 const cfg = configLoader.data.appConfig;
-console.note('----------------------------------------------------------'.blue);
+console.note('----------------------------------------------------------');
 console.note('> CONFIG:', JSON.stringify(cfg, null, 2));
-console.note('----------------------------------------------------------'.blue);
+console.note('----------------------------------------------------------');
 
 const init_http = (cfg) => {
     const app = express();

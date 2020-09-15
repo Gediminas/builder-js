@@ -8,22 +8,37 @@ const init = (server) => {
     console.log('Socket server started');
 
     server_io.on('connection', (socket) => {
-        console.log(`Client connected: ${socket.conn.remoteAddress}`.yellow)
+        console.network(`Client connected: ${socket.conn.remoteAddress}`)
         //socket.emit('task-added', {test: 'test'});
 
         socket.on('request-products', (data) => {
             console.log('request-products', data);
-            socket.emit('update-products', {
-                products: core.getProducts(),
-            });
+            socket.emit('update-products', { products: core.getProducts() });
+        });
+
+        socket.on('request-tasks', (data) => {
+            console.log('request-tasks', data);
+            socket.emit('update-tasks', { tasks: core.allTasks() });
         });
 
         socket.on('add_task', (data) => {
             console.log('add_task', data);
             core.addTask(data.product_id, {status: 'N/A'});
+            socket.emit('update-tasks', { tasks: core.allTasks() });
         });
+
+        socket.on('drop_task', (data) => {
+            console.log('drop_task', data);
+            core.dropTask(data.task_uid);
+            socket.emit('update-tasks', { tasks: core.allTasks() });
+        });
+
+        core.on('task-completed', (param) => {
+            socket.emit('update-tasks', { tasks: core.allTasks() });
+        })
     });
 };
+
 
 // const sendOnProjectUpdate = async (action, param) => {
 //     if (server_io) {

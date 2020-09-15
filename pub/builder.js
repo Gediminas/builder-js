@@ -17,7 +17,7 @@ const vm = new Vue({
     },
     methods: {
         add_task: (product_id) => socket.emit('add_task', { product_id }),
-        remove_task: (task_id) => socket.emit('remove_task', { task_id })
+        drop_task: (task_uid) => socket.emit('drop_task', { task_uid })
     },
     mounted() {
         console.log(">> VUE mounted..."); 
@@ -35,15 +35,21 @@ setTimeout(function() {
 }, 3000);
 
 socket.emit('request-products');
+socket.emit('request-tasks');
 
 socket.on('update-products', (data) => {
     console.log('update-products', data);
     vm.products = data.products;
 });
 
-socket.on('task-added', (data) => {
-    console.log('task-added', data);
+socket.on('update-tasks', (data) => {
+    console.log('update-tasks', data);
+    vm.tasks = data.tasks;
 });
+
+// socket.on('task-added', (data) => {
+//     console.log('task-added', data);
+// });
 
 // socket.emit = (event, param) => {
 //     console.log('Sending:', event, param);

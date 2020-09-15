@@ -48,17 +48,17 @@ log.init = () => {
     };
 
     console.note = (...args) => {
-        const colored_args = colorize(args, colors.brightYellow);
+        const colored_args = colorize(args, colors.yellow);
         colored_args.unshift(get_date_time().grey);
         orig_log.apply(this, colored_args);
     };
     console.ok = (...args) => {
-        const colored_args = colorize(args, colors.bgGreen);
+        const colored_args = colorize(args, colors.green);
         colored_args.unshift(get_date_time().grey);
         orig_log.apply(this, colored_args);
     };
     console.network = (...args) => {
-        const colored_args = colorize(args, colors.bgBrightBlue);
+        const colored_args = colorize(args, colors.brightBlue);
         colored_args.unshift(get_date_time().grey);
         orig_log.apply(this, colored_args);
     };

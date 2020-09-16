@@ -3,9 +3,9 @@ const pool = require('./pool.js');
 
 let server_io = null;
 
-const init = (server) => {
-    server_io = io(server);
-    console.log('Socket server started');
+pool.on('initialized', (param) => {
+    server_io = io(param.cfg.http_server);
+    console.network('Socket server started');
 
     server_io.on('connection', (socket) => {
         console.network(`Client connected: ${socket.conn.remoteAddress}`)
@@ -45,8 +45,7 @@ const init = (server) => {
             socket.emit('update-products', { products: pool.getProducts() });
         })
     });
-};
-
+})
 
 // const sendOnProjectUpdate = async (action, param) => {
 //     if (server_io) {
@@ -66,6 +65,3 @@ const init = (server) => {
 //     sendOnProjectUpdate('project-added', param);
 // });
 
-module.exports = {
-    init,
-};

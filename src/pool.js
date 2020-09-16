@@ -4,14 +4,14 @@ const sys = require('./sys_util')
 
 class Pool extends events {
   initialize(impl, products, cfg) {
-    console.note('core: Initializing')
+    console.info('pool: Initializing')
     this.products = products
     this.waitingTasks = []
     this.activeTasks = []
     this.maxWorkers = cfg.maxWorkers
     this.impl = impl
     this.emit('initialized', { cfg })
-    console.note('core: Initialized');
+    console.info('pool: Initialized');
   }
 
   addTask(productId, taskData) {

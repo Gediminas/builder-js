@@ -18,6 +18,7 @@ pool.on('task-added', (param) => {
   param.task.time_start = 0
   param.task.time_end   = 0
   param.task.time_diff  = 0
+    param.task.data = {};
   param.task.data.product_name = param.task.product_id
   param.task.data.status = 'QUEUED'
   //param.task.data.comment =        'comment',

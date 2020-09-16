@@ -20,28 +20,17 @@ console.note('----------------------------------------------------------');
 console.note('> CONFIG:', JSON.stringify(cfg, null, 2));
 console.note('----------------------------------------------------------');
 
-const init_http = (cfg) => {
+console.info('products loading');
+productLoader(cfg.script_dir, (products) => {
+    console.info('products loaded');
     const app = express();
     const pub = path.join(__dirname, '../pub');
-    console.log('Static files folder:', pub);
     app.use('/', express.static(pub));
-
-    // app.use((err, req, res, next) => {
-    //     // Handler for global and uncaugth errors
-    //     res.status(500).send(err.toString());
-    //     next();
-    // });
+    console.info('Static files folder:', pub);
 
     const server = app.listen(cfg.server_port, cfg.server_access, () => {
-        console.log(`HTTP server started, port ${cfg.server_port}`);
-        sockets.init(server);
+        console.network(`HTTP server started, port ${cfg.server_port}`);
+        cfg.http_server = server;
+        pool.initialize(poolExecImpl, products, cfg);
     });
-    
-};
-
-console.log('products loading');
-productLoader(cfg.script_dir, (products) => {
-    console.log('products loaded');
-    pool.initialize(poolExecImpl, products, cfg);
-    init_http(cfg);
 });

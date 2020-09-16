@@ -1,7 +1,7 @@
 {
   "server_address":     "http://localhost",
   "server_port":        "2000",
-  "server_access":      "0.0.0.0",
+  "server_access":      "127.0.0.1",
   "show_history_limit": "5",
   "script_dir":         "_scripts/",
   "working_dir":        "_working/",

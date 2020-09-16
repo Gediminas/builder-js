@@ -4,7 +4,7 @@
   "description": "Automatated tasks server/page (node, express, socket.io, vue)",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon ./src/builder.js",
+    "start": "nodemon ./src/builder.js --ignore '_*'",
     "test": "npm test"
   },
   "repository": {

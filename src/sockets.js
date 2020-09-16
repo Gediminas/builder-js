@@ -1,5 +1,5 @@
 const io = require('socket.io');
-const core = require('./pool.js');
+const pool = require('./pool.js');
 
 let server_io = null;
 
@@ -13,28 +13,36 @@ const init = (server) => {
 
         socket.on('request-products', (data) => {
             console.log('request-products', data);
-            socket.emit('update-products', { products: core.getProducts() });
+            socket.emit('update-products', { products: pool.getProducts() });
         });
 
         socket.on('request-tasks', (data) => {
             console.log('request-tasks', data);
-            socket.emit('update-tasks', { tasks: core.allTasks() });
+            socket.emit('update-tasks', { tasks: pool.allTasks() });
         });
 
         socket.on('add_task', (data) => {
             console.log('add_task', data);
-            core.addTask(data.product_id, {status: 'N/A'});
-            socket.emit('update-tasks', { tasks: core.allTasks() });
+            pool.addTask(data.product_id);
+            socket.emit('update-tasks', { tasks: pool.allTasks() });
+            socket.emit('update-products', { products: pool.getProducts() });
         });
 
         socket.on('drop_task', (data) => {
             console.log('drop_task', data);
-            core.dropTask(data.task_uid);
-            socket.emit('update-tasks', { tasks: core.allTasks() });
+            pool.dropTask(data.task_uid);
+            socket.emit('update-tasks', { tasks: pool.allTasks() });
+            socket.emit('update-products', { products: pool.getProducts() });
         });
 
-        core.on('task-completed', (param) => {
-            socket.emit('update-tasks', { tasks: core.allTasks() });
+        pool.on('task-completed', (param) => {
+            socket.emit('update-tasks', { tasks: pool.allTasks() });
+            socket.emit('update-products', { products: pool.getProducts() });
+        })
+
+        pool.on('task-started', (param) => {
+            socket.emit('update-tasks', { tasks: pool.allTasks() });
+            socket.emit('update-products', { products: pool.getProducts() });
         })
     });
 };
@@ -51,10 +59,10 @@ const init = (server) => {
 //     }
 // };
 
-// core.on('task-added', (param) => {
+// pool.on('task-added', (param) => {
 //     sendOnProjectUpdate('project-added', param);
 // });
-// core.on('task-changed', (param) => {
+// pool.on('task-changed', (param) => {
 //     sendOnProjectUpdate('project-added', param);
 // });
 

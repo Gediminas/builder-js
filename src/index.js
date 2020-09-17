@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const pool = require('./pool.js');
-const poolExecImpl = require('./pool-core-exe.js');
 require('./pool-core-sys.js');
 require('./pool-tty.js');
 require('./pool-log.js');
@@ -36,6 +35,6 @@ productLoader(cfg.script_dir, (products) => {
         console.network('Socket server started');
         cfg.socket_server = socket_server;
 
-        pool.initialize(poolExecImpl, products, cfg);
+        pool.initialize(products, cfg);
     });
 });

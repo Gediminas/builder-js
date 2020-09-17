@@ -1,15 +1,15 @@
 const events = require('events')
 const assert = require('better-assert')
 const sys = require('./sys_util')
+const {startTask, killTask, CanRun} = require('./core-fnc')
 
 class Pool extends events {
-  initialize(impl, products, cfg) {
+  initialize(products, cfg) {
     console.info('pool: Initializing')
     this.products = products
     this.waitingTasks = []
     this.activeTasks = []
     this.maxWorkers = cfg.maxWorkers
-    this.impl = impl
     this.emit('initialized', { cfg })
     console.info('pool: Initialized');
   }
@@ -36,7 +36,7 @@ class Pool extends events {
     for (const task of this.activeTasks) {
       if (task.uid === taskUid) {
         this.emit('task-killing', { task })
-        this.impl.killTask(task).then(() => {
+        killTask(task).then(() => {
           this.emit('task-killed', { task })
         }).catch((error) => {
           this.emit('error', { task, error, from: 'dropTask' })
@@ -66,14 +66,14 @@ class Pool extends events {
     }
     for (const i1 in this.waitingTasks) {
       const check_task = this.waitingTasks[i1]
-      if (this.impl.CanRun(check_task, this.activeTasks)) {
+      if (CanRun(check_task, this.activeTasks)) {
         continue
       }
       const task = this.waitingTasks.splice(i1, 1)[0]
       assert(task === check_task)
       this.activeTasks.push(task)
       this.emit('task-starting', { task })
-      this.impl.startTask(task, this._taskOutput.bind(this))
+      startTask(task, this._taskOutput.bind(this))
         .then(() => {
           this._taskCompleted(task)
         })

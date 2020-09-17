@@ -11,7 +11,7 @@ const processFullLines = (origBuffer, fnDoOnFullLine) => {
   return newBuffer
 }
 
-function startTask(task, taskOutput) {
+const startTask = (task, taskOutput) => {
   return new Promise((resolve, reject) => {
     const args    = [task.product.script_path]
     const options = { cwd: task.working_dir }
@@ -55,7 +55,7 @@ function startTask(task, taskOutput) {
   })
 }
 
-function killTask(task) {
+const killTask = (task) => {
   return new Promise((resolve, reject) => {
     kill(task.pid, 'SIGTERM', (error) => { // SIGKILL
       if (error) {
@@ -67,7 +67,7 @@ function killTask(task) {
   })
 }
 
-function CanRun(task, activeTasks) {
+const CanRun = (task, activeTasks) => {
   const found_active = activeTasks.find(_task => _task.product_id === task.product_id)
   return found_active ? true : false
 }

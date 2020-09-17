@@ -28,9 +28,14 @@ productLoader(cfg.script_dir, (products) => {
     app.use('/', express.static(pub));
     console.info('Static files folder:', pub);
 
-    const server = app.listen(cfg.server_port, cfg.server_access, () => {
+    const http_server = app.listen(cfg.server_port, cfg.server_access, () => {
         console.network(`HTTP server started, port ${cfg.server_port}`);
-        cfg.http_server = server;
+
+        const io = require('socket.io');
+        const socket_server = io(http_server);
+        console.network('Socket server started');
+        cfg.socket_server = socket_server;
+
         pool.initialize(poolExecImpl, products, cfg);
     });
 });

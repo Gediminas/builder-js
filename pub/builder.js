@@ -34,17 +34,12 @@ setTimeout(function() {
     vm.connection_text   = '';
 }, 3000);
 
-socket.emit('request-products');
-socket.emit('request-tasks');
+socket.emit('request-update-state');
 
-socket.on('update-products', (data) => {
-    console.log('update-products', data);
-    vm.products = data.products;
-});
-
-socket.on('update-tasks', (data) => {
-    console.log('update-tasks', data);
+socket.on('update-state', (data) => {
+    console.log('update-state', data);
     vm.tasks = data.tasks;
+    vm.products = data.products;
 });
 
 // socket.on('task-added', (data) => {

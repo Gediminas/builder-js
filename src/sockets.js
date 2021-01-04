@@ -25,10 +25,10 @@ pool.on('initialized', (param) => {
 
         pool.on('task-completed', (param) => {
             socket.emit('update-state', { tasks: pool.allTasks(), products: pool.getProducts() });
-        })
+        });
 
         pool.on('task-started', (param) => {
             socket.emit('update-state', { tasks: pool.allTasks(), products: pool.getProducts() });
-        })
+        });
     });
 });

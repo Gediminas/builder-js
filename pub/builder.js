@@ -34,10 +34,11 @@ setTimeout(function() {
     vm.connection_text   = '';
 }, 3000);
 
+console.log('--> request-update-state');
 socket.emit('request-update-state');
 
 socket.on('update-state', (data) => {
-    console.log('update-state', data);
+    console.log('<-- update-state', data);
     vm.tasks = data.tasks;
     vm.products = data.products;
 });

@@ -1,12 +1,12 @@
 /* global Vue io */
 
-const socket = io.connect();
+const server = io.connect();
 
-// let socket = new WebSocket('ws://localhost:2001/echo');
+// let server = new WebSocket('ws://localhost:2001/echo');
 //
-// socket.emit = (event, param) => {
+// server.emit = (event, param) => {
 //     console.log('Sending:', event, param);
-//     socket.send(JSON.stringify({event, param}))
+//     server.send(JSON.stringify({event, param}))
 // };
 
 const vm = new Vue({
@@ -18,8 +18,8 @@ const vm = new Vue({
     products         : [],
   },
   methods: {
-    add_task : product_id => socket.emit('add_task', { product_id }),
-    drop_task: task_uid => socket.emit('drop_task', { task_uid }),
+    add_task : product_id => server.emit('add_task', { product_id }),
+    drop_task: task_uid => server.emit('drop_task', { task_uid }),
   },
   mounted() {
     console.log('>> VUE mounted...');
@@ -39,24 +39,24 @@ setTimeout(() => {
 }, 3000);
 
 console.log('--> request-state');
-socket.emit('request-state');
+server.emit('request-state');
 
-socket.on('state', (data) => {
-  console.log('<-- state', data);
+server.on('data-state', (data) => {
+  console.log('<-- data-state received:', data);
   vm.tasks = data.tasks;
   vm.products = data.products;
 });
 
-// socket.on('task-added', (data) => {
+// server.on('task-added', (data) => {
 //     console.log('task-added', data);
 // });
 
-// socket.emit = (event, param) => {
+// server.emit = (event, param) => {
 //     console.log('Sending:', event, param);
-//     socket.send(JSON.stringify({event, param}))
+//     server.send(JSON.stringify({event, param}))
 // };
 // 
-// socket.onopen = function() {
+// server.onopen = function() {
 //     console.log('>> Connected to server');
 //     //if (reconnect) {
 //         vm.connection_status = 'ok';
@@ -68,7 +68,7 @@ socket.on('state', (data) => {
 //     //}
 // };
 // 
-// socket.onmessage = function (evt) { 
+// server.onmessage = function (evt) {
 //     const data = JSON.parse(evt.data)
 //     if (!data.event) {
 //         console.log('>> UNKNOWN EVENT RECEIVED:', data);
@@ -106,14 +106,14 @@ socket.on('state', (data) => {
 //     }
 // };
 // 
-// socket.onerror = function(err) {
-//     console.error('Socket error:', err)
+// server.onerror = function(err) {
+//     console.error('server error:', err)
 //     vm.connection_status = 'error';
 //     vm.connection_text = `Error: ${JSON.stringify(err)}`;
-//     socket.close();
+//     server.close();
 // };
 // 
-// socket.onclose = function(e) {
+// server.onclose = function(e) {
 //     console.error('Disconnected:', e)
 //     vm.connection_status = 'warn';
 //     vm.connection_text   = 'Reconnecting...';

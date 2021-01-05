@@ -1,13 +1,13 @@
 const fs = require('fs');
 const moment = require('moment');
 
-exports.getTimeStamp = () => new Date().valueOf()
+exports.getTimeStamp = () => new Date().valueOf();
 
 exports.timeToString = timestamp => moment(timestamp)
-  .format('YYYY-MM-DD HH:mm:ss')
+  .format('YYYY-MM-DD HH:mm:ss');
 
 exports.timeToDir = timestamp => moment(timestamp)
-  .format('YYYY-MM-DD_HH-mm-ss_SSS')
+  .format('YYYY-MM-DD_HH-mm-ss_SSS');
 
 //exports.uidToDir = (uid) => {
   //const timestamp = Math.floor(uid / 1000) * 1000

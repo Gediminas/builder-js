@@ -23,9 +23,9 @@ const log = (param, ...args) => {
     //   colorFnc = worker2ColorFnc[colorNr]
     //   args.unshift(colors.bgWhite.black(param.task.worker_nr))
     // }
-    const colorFnc = worker2ColorFnc[0]
-    args.unshift(colorFnc(param.task.uid))
-    args.unshift(colorFnc(param.task.product_id))
+    const colorFnc = worker2ColorFnc[0];
+    args.unshift(colorFnc(param.task.uid));
+    args.unshift(colorFnc(param.task.product_id));
   }
   console.log(...args)
 }

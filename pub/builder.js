@@ -1,27 +1,29 @@
-var socket = io.connect();
+/* global Vue io */
+
+const socket = io.connect();
 
 // let socket = new WebSocket('ws://localhost:2001/echo');
-// 
+//
 // socket.emit = (event, param) => {
 //     console.log('Sending:', event, param);
 //     socket.send(JSON.stringify({event, param}))
 // };
 
 const vm = new Vue({
-    el: '#app',
-    data: {
-        connection_status: 'ok',
-        connection_text: '',
-        tasks: [],
-        products: []
-    },
-    methods: {
-        add_task: (product_id) => socket.emit('add_task', { product_id }),
-        drop_task: (task_uid) => socket.emit('drop_task', { task_uid })
-    },
-    mounted() {
-        console.log(">> VUE mounted..."); 
-    }
+  el  : '#app',
+  data: {
+    connection_status: 'ok',
+    connection_text  : '',
+    tasks            : [],
+    products         : [],
+  },
+  methods: {
+    add_task : product_id => socket.emit('add_task', { product_id }),
+    drop_task: task_uid => socket.emit('drop_task', { task_uid }),
+  },
+  mounted() {
+    console.log('>> VUE mounted...');
+  },
 });
 
 
@@ -29,18 +31,20 @@ console.log('Socket connected');
 
 vm.connection_status = 'ok';
 vm.connection_text   = 'Connected';
-setTimeout(function() {
+setTimeout(() => {
+  if (vm.connection_status === 'ok') {
     vm.connection_status = '';
     vm.connection_text   = '';
+  }
 }, 3000);
 
 console.log('--> request-update-state');
 socket.emit('request-update-state');
 
 socket.on('update-state', (data) => {
-    console.log('<-- update-state', data);
-    vm.tasks = data.tasks;
-    vm.products = data.products;
+  console.log('<-- update-state', data);
+  vm.tasks = data.tasks;
+  vm.products = data.products;
 });
 
 // socket.on('task-added', (data) => {

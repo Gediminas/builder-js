@@ -35,10 +35,7 @@
         <tbody>
           <tr class="row" v-for="task in tasks" :id = "`row_${task.uid}`" :task_uid = "task.uid">
             <td class="cell actions">
-              <button class="btn btn_addjob"
-                      v-on:click="drop_task(task.uid);">
-                -
-              </button>
+              <button class="btn btn_addjob" v-on:click="drop_task(task.uid);"> - </button>
             </td>
             <td class="cell">{{ task.uid }}</td>
             <td class="cell">{{ task.product_id }}</td>
@@ -62,12 +59,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="row" v-for="product in products" :product_id = "`row_${product.product_id}`" :product_id = "product.id">   <td class="cell actions">
-            <button class="btn btn_addjob"
-                    v-on:click="add_task(product.product_id);">
-              +
-            </button>
-          </td>
+          <tr class="row" v-for="product in products" :product_id = "`row_${product.product_id}`" :product_id = "product.id">
+            <td class="cell actions">
+              <button class="btn btn_addjob"
+                      v-on:click="add_task(product.product_id);">
+                +
+              </button>
+            </td>
           <td class="cell">{{ product.product_id }}</td>
           <td class="cell">{{ product.status }}</td>
           <td class="cell duration">{{ product.duration }}</td>

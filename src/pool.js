@@ -1,16 +1,16 @@
-const events = require('events')
-const assert = require('better-assert')
-const sys = require('./sys_util')
-const {startTask, killTask, CanRun} = require('./core-fnc')
+const events = require('events');
+const assert = require('better-assert');
+const sys = require('./sys_util');
+const { startTask, killTask, CanRun } = require('./core-fnc');
 
 class Pool extends events {
   initialize(products, cfg) {
-    console.info('pool: Initializing')
-    this.products = products
-    this.waitingTasks = []
-    this.activeTasks = []
-    this.maxWorkers = cfg.maxWorkers
-    this.emit('initialized', { cfg })
+    console.info('pool: Initializing');
+    this.products = products;
+    this.waitingTasks = [];
+    this.activeTasks = [];
+    this.maxWorkers = cfg.maxWorkers;
+    this.emit('initialized', { cfg });
     console.info('pool: Initialized');
   }
 
@@ -19,69 +19,69 @@ class Pool extends events {
       uid       : sys.generateUid(),
       product_id: productId,
       data      : taskData,
-    }
-    this.waitingTasks.push(task)
-    this.emit('task-added', { task, taskData })
-    setImmediate(() => this._processQueue())
+    };
+    this.waitingTasks.push(task);
+    this.emit('task-added', { task, taskData });
+    setImmediate(() => this._processQueue());
   }
 
   dropTask(taskUid) {
     for (const i in this.waitingTasks) {
       if (this.waitingTasks[i].uid === taskUid) {
-        const task = this.waitingTasks.splice(i, 1)[0]
-        this.emit('task-removed', { task })
-        return
+        const task = this.waitingTasks.splice(i, 1)[0];
+        this.emit('task-removed', { task });
+        return;
       }
     }
     for (const task of this.activeTasks) {
       if (task.uid === taskUid) {
-        this.emit('task-killing', { task })
+        this.emit('task-killing', { task });
         killTask(task).then(() => {
-          this.emit('task-killed', { task })
+          this.emit('task-killed', { task });
         }).catch((error) => {
-          this.emit('error', { task, error, from: 'dropTask' })
-        })
+          this.emit('error', { task, error, from: 'dropTask' });
+        });
 
-        return
+        return;
       }
     }
-    this.emit('task-kill-failed', { taskUid })
+    this.emit('task-kill-failed', { taskUid });
   }
 
   getProducts() {
-    return this.products
+    return this.products;
   }
 
   activeTasks() {
-    return this.activeTasks
+    return this.activeTasks;
   }
 
   allTasks() {
-    return this.activeTasks.concat(this.waitingTasks)
+    return this.activeTasks.concat(this.waitingTasks);
   }
 
   _processQueue() {
     if (this.activeTasks.length >= this.maxWorkers) {
-      return
+      return;
     }
     for (const i1 in this.waitingTasks) {
-      const check_task = this.waitingTasks[i1]
+      const check_task = this.waitingTasks[i1];
       if (CanRun(check_task, this.activeTasks)) {
-        continue
+        continue;
       }
-      const task = this.waitingTasks.splice(i1, 1)[0]
-      assert(task === check_task)
-      this.activeTasks.push(task)
-      this.emit('task-starting', { task })
+      const task = this.waitingTasks.splice(i1, 1)[0];
+      assert(task === check_task);
+      this.activeTasks.push(task);
+      this.emit('task-starting', { task });
       startTask(task, this._taskOutput.bind(this))
         .then(() => {
-          this._taskCompleted(task)
+          this._taskCompleted(task);
         })
         .catch((error) => {
-          this.emit('error', { task, error, from: '_processQueue' })
-        })
-      this.emit('task-started', { task })
-      return
+          this.emit('error', { task, error, from: '_processQueue' });
+        });
+      this.emit('task-started', { task });
+      return;
     }
     if (!this.activeTasks) {
       this.emit('error', {
@@ -89,23 +89,23 @@ class Pool extends events {
         error: false,
         msg  : 'Cannot start any task',
         from : '_processQueue',
-      })
+      });
     }
   }
 
   _taskCompleted(task) {
-    const i = this.activeTasks.indexOf(task)
-    assert(i !== -1)
-    const closedTask = this.activeTasks.splice(i, 1)[0]
-    assert(closedTask === task)
-    setImmediate(() => this._processQueue())
-    this.emit('task-completed', { task })
+    const i = this.activeTasks.indexOf(task);
+    assert(i !== -1);
+    const closedTask = this.activeTasks.splice(i, 1)[0];
+    assert(closedTask === task);
+    setImmediate(() => this._processQueue());
+    this.emit('task-completed', { task });
   }
 
   _taskOutput(task, text, std) {
-    this.emit('task-output', { task, text, std })
+    this.emit('task-output', { task, text, std });
   }
 }
 
-const pool = new Pool()
-module.exports = pool
+const pool = new Pool();
+module.exports = pool;

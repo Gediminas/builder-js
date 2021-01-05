@@ -38,11 +38,11 @@ setTimeout(() => {
   }
 }, 3000);
 
-console.log('--> request-update-state');
-socket.emit('request-update-state');
+console.log('--> request-state');
+socket.emit('request-state');
 
-socket.on('update-state', (data) => {
-  console.log('<-- update-state', data);
+socket.on('state', (data) => {
+  console.log('<-- state', data);
   vm.tasks = data.tasks;
   vm.products = data.products;
 });
@@ -75,8 +75,8 @@ socket.on('update-state', (data) => {
 //         return;
 //     }
 //     switch (data.event) {
-//     case 'update_state':
-//         console.log('RECEIVED', 'update_state', data);
+//     case 'state':
+//         console.log('RECEIVED', 'state', data);
 //         vm.tasks    = data.tasks;
 //         vm.products = data.products;
 //         break;

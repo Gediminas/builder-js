@@ -1,10 +1,11 @@
 const pool = require('./pool.js');
 
 pool.on('initialized', (param) => {
-  param.cfg.socket_server.on('connect', (client) => {
-    console.network(`Client connected: ${client.conn.remoteAddress}`);
+  const server = param.cfg.socket_server;
 
-    console.log(param.cfg.socket_server.engine.clientsCount);
+  server.on('connect', (client) => {
+    console.network(`Client connected: ${client.conn.remoteAddress}`);
+    console.network('client count:', server.engine.clientsCount);
 
     client.on('add_task', (data) => {
       console.log('add_task', data);
@@ -16,47 +17,40 @@ pool.on('initialized', (param) => {
       pool.dropTask(data.task_uid);
     });
 
-    client.on('request-state', (data) => {
-      console.log('<== request-state', data);
+    client.on('request-state', () => {
+      console.log('<== request-state');
       console.log('==> data-state');
       client.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts() });
     });
-
-
-    pool.once('task-added', (param) => {
-      console.log('task-added: ==> data-state');
-      client.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task added to the pool'});
-    });
-
-    pool.once('task-started', (param) => {
-      console.log('task-started: ==> data-state');
-      client.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task started'});
-    });
-
-    pool.once('task-removed', (param) => {
-      console.log('task-removed: ==> data-state');
-      client.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task removed from the pool'});
-    });
-
-    pool.once('task-killing', (param) => {
-      console.log('task-killing: ==> data-state');
-      client.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task will be killed'});
-    });
-
-    pool.once('task-killed', (param) => {
-      console.log('task-killed: ==> data-state');
-      client.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task was killed'});
-    });
-
-    pool.once('task-completed', (param) => {
-      console.log('task-completed: ==> data-state');
-      client.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task completed'});
-    });
-
   });
 
-  param.cfg.socket_server.on('disconnect', (client) => {
-    client.removeAllEventListeners();
+  pool.on('task-added', (param) => {
+    console.log('task-added: ==> data-state');
+    server.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task added to the pool'});
   });
 
+  pool.on('task-started', (param) => {
+    console.log('task-started: ==> data-state');
+    server.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task started'});
+  });
+
+  pool.on('task-removed', (param) => {
+    console.log('task-removed: ==> data-state');
+    server.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task removed from the pool'});
+  });
+
+  pool.on('task-killing', (param) => {
+    console.log('task-killing: ==> data-state');
+    server.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task will be killed'});
+  });
+
+  pool.on('task-killed', (param) => {
+    console.log('task-killed: ==> data-state');
+    server.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task was killed'});
+  });
+
+  pool.on('task-completed', (param) => {
+    console.log('task-completed: ==> data-state');
+    server.emit('data-state', { tasks: pool.allTasks(), products: pool.getProducts(), debug: 'task completed'});
+  });
 });

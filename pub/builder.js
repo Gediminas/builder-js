@@ -1,13 +1,8 @@
-/* global Vue io */
+/* global Vue io window alert */
+
+let force_refresh = false;
 
 const server = io.connect();
-
-// let server = new WebSocket('ws://localhost:2001/echo');
-//
-// server.emit = (event, param) => {
-//     console.log('Sending:', event, param);
-//     server.send(JSON.stringify({event, param}))
-// };
 
 const vm = new Vue({
   el  : '#app',
@@ -26,103 +21,39 @@ const vm = new Vue({
   },
 });
 
-
-console.log('Socket connected');
-
-vm.connection_status = 'ok';
-vm.connection_text   = 'Connected';
-setTimeout(() => {
-  if (vm.connection_status === 'ok') {
-    vm.connection_status = '';
-    vm.connection_text   = '';
+server.on('connect', () => {
+  if (force_refresh) {
+    window.location.reload();
+    return;
   }
-}, 3000);
+  console.log('>> Socket connected');
+  vm.connection_status = 'ok';
+  vm.connection_text   = 'Connected';
+  setTimeout(() => {
+    if (vm.connection_status === 'ok') {
+      vm.connection_status = '';
+      vm.connection_text   = '';
+    }
+  }, 3000);
 
-console.log('--> request-state');
-server.emit('request-state');
 
-server.on('data-state', (data) => {
-  console.log('<-- data-state received:', data);
-  vm.tasks = data.tasks;
-  vm.products = data.products;
+  console.log('--> request-state');
+  server.emit('request-state');
+
+  server.on('data-state', (data) => {
+    console.log('<-- data-state received:', data);
+    vm.tasks = data.tasks;
+    vm.products = data.products;
+  });
+
+  server.on('disconnect', function(data2) {
+    console.log('>> Socket disconnected', data2);
+    vm.connection_status = 'error';
+    vm.connection_text   = 'Disconnected';
+    force_refresh = true;
+  });
 });
 
-// server.on('task-added', (data) => {
-//     console.log('task-added', data);
-// });
-
-// server.emit = (event, param) => {
-//     console.log('Sending:', event, param);
-//     server.send(JSON.stringify({event, param}))
-// };
-// 
-// server.onopen = function() {
-//     console.log('>> Connected to server');
-//     //if (reconnect) {
-//         vm.connection_status = 'ok';
-//         vm.connection_text   = 'Connected';
-//         setTimeout(function() {
-//             vm.connection_status = '';
-//             vm.connection_text   = '';
-//         }, 3000);
-//     //}
-// };
-// 
-// server.onmessage = function (evt) {
-//     const data = JSON.parse(evt.data)
-//     if (!data.event) {
-//         console.log('>> UNKNOWN EVENT RECEIVED:', data);
-//         return;
-//     }
-//     switch (data.event) {
-//     case 'state':
-//         console.log('RECEIVED', 'state', data);
-//         vm.tasks    = data.tasks;
-//         vm.products = data.products;
-//         break;
-//     case 'products-initialized':
-//         console.log('RECEIVED', 'products-initialized');
-//         vm.tasks    = data.tasks;
-//         vm.products = data.products;
-//         break;
-//     case 'task-queued':
-//         console.log('RECEIVED', 'task-queued');
-//         vm.tasks    = data.tasks;
-//         vm.products = data.products;
-//         break;
-//     case 'task-removed':
-//         console.log('RECEIVED', 'task-remove');
-//         vm.tasks    = data.tasks;
-//         vm.products = data.products;
-//         break;
-//     case 'task-starting':
-//         console.log('RECEIVED', 'task-starting');
-//         vm.tasks    = data.tasks;
-//         vm.products = data.products;
-//         break;
-//     default:
-//         console.log('>> TODO EVENT:', data.event, data.param);
-//         break;
-//     }
-// };
-// 
-// server.onerror = function(err) {
-//     console.error('server error:', err)
-//     vm.connection_status = 'error';
-//     vm.connection_text = `Error: ${JSON.stringify(err)}`;
-//     server.close();
-// };
-// 
-// server.onclose = function(e) {
-//     console.error('Disconnected:', e)
-//     vm.connection_status = 'warn';
-//     vm.connection_text   = 'Reconnecting...';
-//     setTimeout(function() {
-//         console.log('Reconnecting...')
-//         connect(true);
-//     }, 500);
-// };
-
 function shutdown () {
-    alert('shutdown');
+  alert('shutdown');
 }

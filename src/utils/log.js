@@ -15,7 +15,6 @@ const log = (...args) => {
 log.init = () => {
   const orig_log   = console.log;
   const orig_debug = console.debug;
-  const orig_info  = console.info;
   const orig_warn  = console.warn;
   const orig_error = console.error;
 
@@ -28,11 +27,6 @@ log.init = () => {
     const colored_args = colorize(args, colors.magenta);
     colored_args.unshift(get_date_time().grey);
     orig_debug.apply(this, colored_args);
-  };
-  console.info = (...args) => {
-    const colored_args = colorize(args, colors.grey);
-    colored_args.unshift(get_date_time().grey);
-    orig_info.apply(this, colored_args);
   };
   console.warn = (...args) => {
     args.unshift('WARNING:');

@@ -5,13 +5,13 @@ const { startTask, killTask, CanRun } = require('./core-fnc');
 
 class Pool extends events {
   initialize(products, cfg) {
-    console.info('pool: Initializing');
+    console.log('pool: Initializing');
     this.products = products;
     this.waitingTasks = [];
     this.activeTasks = [];
     this.maxWorkers = cfg.maxWorkers;
     this.emit('initialized', { cfg });
-    console.info('pool: Initialized');
+    console.log('pool: Initialized');
   }
 
   addTask(productId, taskData) {

@@ -19,13 +19,13 @@ console.note('----------------------------------------------------------');
 console.note('> CONFIG:', JSON.stringify(cfg, null, 2));
 console.note('----------------------------------------------------------');
 
-console.info('products loading');
+console.log('products loading');
 productLoader(cfg.script_dir, (products) => {
-    console.info('products loaded');
+    console.log('products loaded');
     const app = express();
     const pub = path.join(__dirname, '../pub');
     app.use('/', express.static(pub));
-    console.info('Static files folder:', pub);
+    console.log('Static files folder:', pub);
 
     const http_server = app.listen(cfg.server_port, cfg.server_access, () => {
         console.network(`HTTP server started, port ${cfg.server_port}`);

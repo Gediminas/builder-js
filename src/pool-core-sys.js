@@ -87,7 +87,3 @@ pool.on('task-completed', (param) => {
   }
   param.task.data.status = param.task.result
 })
-
-pool.on('task-output', (param) => {
-  param.time = sys.getTimeStamp()
-})

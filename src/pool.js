@@ -73,7 +73,7 @@ class Pool extends events {
       assert(task === check_task);
       this.activeTasks.push(task);
       this.emit('task-starting', { task });
-      startTask(task, this._taskOutput.bind(this))
+      startTask(task)
         .then(() => {
           this._taskCompleted(task);
         })
@@ -100,10 +100,6 @@ class Pool extends events {
     assert(closedTask === task);
     setImmediate(() => this._processQueue());
     this.emit('task-completed', { task });
-  }
-
-  _taskOutput(task, text, std) {
-    this.emit('task-output', { task, text, std });
   }
 }
 

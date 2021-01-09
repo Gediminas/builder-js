@@ -2,8 +2,6 @@ const colors = require('colors')
 const pool   = require('./pool.js')
 const sys    = require('./sys_util.js')
 
-let sub = 0
-
 const worker2ColorFnc = [
   colors.bgCyan.black,
   colors.bgGreen.black,
@@ -50,6 +48,9 @@ pool.on('task-completed', param => log(param,
   `>> tty: Finished: ${param.task.status}, pid=${param.task.pid}}`
     .bgGreen))
 
+/*
+let sub = 0
+
 pool.on('task-output', (param) => {
   const text = param.text
   // if (text.indexOf('@title') === 0)
@@ -69,3 +70,4 @@ pool.on('task-output', (param) => {
   }
 })
 
+*/

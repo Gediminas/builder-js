@@ -22,14 +22,14 @@ const startTask = task => new Promise((resolve, reject) => {
   child.stdout.on('data', (data) => {
     child.bufOut += data;
     child.bufOut = processFullLines(child.bufOut, (text) => {
-      console.log(text);
+      console.log(`#id-${task.uid}`, `${text}`);
     });
   });
 
   child.stderr.on('data', (data) => {
     child.bufErr += data;
     child.bufErr = processFullLines(child.bufErr, (text) => {
-      console.error(text);
+      console.log(`#id-${task.uid}`, `!! ERROR: ${text}`);
     });
   });
 

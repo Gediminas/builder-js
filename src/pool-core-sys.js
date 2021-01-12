@@ -40,7 +40,6 @@ pool.on('task-starting', (param) => {
   param.task.time_start = param.time
 
   const product_dir = this.working_dir + param.task.product_id + '/'
-  const shared_dir  = product_dir + '/shared/'
   const working_dir = product_dir + sys.timeToDir(param.task.time_start) + '/'
 
   console.log(`>> task_uid: ${param.task.uid}`)
@@ -50,7 +49,6 @@ pool.on('task-starting', (param) => {
 
   sys.ensureDir(this.working_dir)
   sys.ensureDir(product_dir)
-  sys.ensureDir(shared_dir)
   sys.ensureDir(working_dir)
 
   param.task.working_dir = working_dir

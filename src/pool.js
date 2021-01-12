@@ -72,6 +72,7 @@ class Pool extends events {
       const task = this.waitingTasks.splice(i1, 1)[0];
       assert(task === check_task);
       this.activeTasks.push(task);
+      console.log(`#id-${task.uid}`, 'Starting');
       this.emit('task-starting', { task });
       startTask(task)
         .then(() => {

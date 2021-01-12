@@ -30,8 +30,6 @@ const log = (param, ...args) => {
 
 //pool.on('initialized',   param => log(param, '>> tty: Initialized'.bgGreen))
 pool.on('error',         param => log(param, `>> tty: ERROR: ${param.msg} ${param.error}`.bgWhite.red))
-pool.on('task-starting', param => log(param, '>> tty: Starting'.bgGreen))
-
 pool.on('task-started',  param => log(param,
   `>> tty: Started: pid=${param.task.pid}`.bgGreen))
 

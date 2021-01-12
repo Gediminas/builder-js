@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const moment = require('moment');
 
 exports.getTimeStamp = () => new Date().valueOf();
@@ -22,13 +23,29 @@ var uidTail = 0;
 exports.generateUid = () =>
   Math.floor(new Date().valueOf() / 1000) * 1000 + (++uidTail) % 1000
 
-exports.ensureDir = (dirPath) => {
-  try {
-    fs.mkdirSync(dirPath)
-    console.log(`Folder created: ${dirPath}`)
-  } catch (err) {
-    if (err.code !== 'EEXIST') {
-      throw err
+exports.ensureDir = (dir) => {
+    if (typeof dir !== 'string') {
+        console.error('BAD DIR:', dir);
+        return dir;
     }
-  }
-}
+    return path
+        .resolve(dir)
+        .split(path.sep)
+        .reduce((acc, cur) => {
+            if (cur.includes(':')) {
+                return cur; // disk on windows
+            }
+            const currentPath = path.normalize(acc + path.sep + cur);
+            try {
+                fs.statSync(currentPath);
+            } catch (e) {
+                if (e.code === 'ENOENT') {
+                    console.log(`Creating folder ${currentPath}`);
+                    fs.mkdirSync(currentPath);
+                } else {
+                    console.error(`Cannot create folder ${dir}`, e);
+                }
+            }
+            return currentPath;
+        }, '');
+};

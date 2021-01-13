@@ -41,8 +41,14 @@ const startTask = task => new Promise((resolve, reject) => {
   });
 
   child.on('close', (exitCode) => {
-    assert(child.bufOut === ''); // TODO send \n
-    assert(child.bufErr === ''); // TODO send \n
+    if (child.bufOut) {
+      console.log(`#id-${task.uid}`, `${child.bufOut}`);
+    }
+    if (child.bufErr) {
+      console.warn(`#id-${task.uid}`, `${child.bufErr}`);
+    }
+    // assert(child.bufOut === ''); // TODO send \n
+    // assert(child.bufErr === ''); // TODO send \n
     delete task.pid;
 
     switch (exitCode) {

@@ -19,7 +19,7 @@ const load_cfg = (script_dir, product_id) => {
 };
 
 const loadProducts = (script_dir, on_loaded) => {
-  glob('*/index.*', { cwd: script_dir, matchBase: 1 }, (err, files) => {
+  glob('*/recipe', { cwd: script_dir, matchBase: 1 }, (err, files) => {
     if (err) {
       return;
     }
@@ -29,13 +29,13 @@ const loadProducts = (script_dir, on_loaded) => {
       const cfg = load_cfg(script_dir, product_id);
       const script_js = script_dir + file;
 
-      let interpreter = '';
-      switch (ext) {
-      case '.js': interpreter = 'node'; break;
-      case '.sh': interpreter = 'sh'; break;
-      default:
-        return;
-      };
+      let interpreter = '..\\..\\..\\shebang.cmd';
+      // switch (ext) {
+      // case '.js': interpreter = 'node'; break;
+      // case '.sh': interpreter = 'sh'; break;
+      // default:
+      //   return;
+      // };
 
       return {
         product_id,

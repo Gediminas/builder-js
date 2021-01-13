@@ -3,7 +3,7 @@ const kill = require('tree-kill');
 const assert = require('better-assert');
 
 const processFullLines = (origBuffer, fnDoOnFullLine) => {
-  const lines = origBuffer.split(/\r?\n/);
+  const lines = origBuffer.replace(/\r/g, '\n').split(/\n?\n/);
   const newBuffer = lines.pop();
   lines.forEach(fnDoOnFullLine);
   assert(newBuffer === '' || origBuffer.slice(-1) !== '\n');
@@ -13,6 +13,9 @@ const processFullLines = (origBuffer, fnDoOnFullLine) => {
 const startTask = task => new Promise((resolve, reject) => {
   const args    = [task.product.script_path];
   const options = { cwd: task.working_dir };
+
+  console.note('STARING: ', task.product.interpreter, args.join(' '));
+  console.debug(JSON.stringify({ options }));
 
   const child = execFile(task.product.interpreter, args, options);
   child.bufOut = '';
@@ -29,7 +32,7 @@ const startTask = task => new Promise((resolve, reject) => {
   child.stderr.on('data', (data) => {
     child.bufErr += data;
     child.bufErr = processFullLines(child.bufErr, (text) => {
-      console.log(`#id-${task.uid}`, `!! ERROR: ${text}`);
+      console.warn(`#id-${task.uid}`, `!! ERROR: ${text}`);
     });
   });
 

@@ -1,6 +1,7 @@
-const { execFile } = require('child_process');
+const proc = require('child_process');
 const kill = require('tree-kill');
 const assert = require('better-assert');
+const path = require('path');
 
 const processFullLines = (origBuffer, fnDoOnFullLine) => {
   const lines = origBuffer.replace(/\r/g, '\n').split(/\n?\n/);
@@ -11,13 +12,13 @@ const processFullLines = (origBuffer, fnDoOnFullLine) => {
 };
 
 const startTask = task => new Promise((resolve, reject) => {
-  const args    = [task.product.script_path];
-  const options = { cwd: task.working_dir };
+  const opt = { cwd: task.working_dir };
+  const exe = path.resolve(task.product.script_path);
 
-  console.note('STARING: ', task.product.interpreter, args.join(' '));
-  console.debug(JSON.stringify({ options }));
+  console.note('STARING: ', task.product.script_path);
+  console.debug(JSON.stringify({ opt }));
 
-  const child = execFile(task.product.interpreter, args, options);
+  const child = proc.exec(exe, opt);
   child.bufOut = '';
   child.bufErr = '';
   task.pid = child.pid;

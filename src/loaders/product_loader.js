@@ -29,7 +29,7 @@ const loadProducts = (script_dir, on_loaded) => {
       const cfg = load_cfg(script_dir, product_id);
       const script_js = script_dir + file;
 
-      let interpreter = '..\\..\\..\\shebang.cmd';
+      let interpreter = '';
       // switch (ext) {
       // case '.js': interpreter = 'node'; break;
       // case '.sh': interpreter = 'sh'; break;

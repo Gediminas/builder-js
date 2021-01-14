@@ -24,25 +24,13 @@ const loadProducts = (script_dir, on_loaded) => {
       return;
     }
     const products = files.map((file) => {
-      const ext = path.extname(file);
       const product_id = path.dirname(file);
       const cfg = load_cfg(script_dir, product_id);
-      const script_js = script_dir + file;
-
-      let interpreter = '';
-      // switch (ext) {
-      // case '.js': interpreter = 'node'; break;
-      // case '.sh': interpreter = 'sh'; break;
-      // default:
-      //   return;
-      // };
-
       return {
         product_id,
         product_name: cfg.product_name,
         cfg,
-        interpreter,
-        script_path : script_js,
+        script_path : path.resolve(script_dir, file),
       };
     });
     on_loaded(products);

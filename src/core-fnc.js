@@ -12,10 +12,10 @@ const processFullLines = (origBuffer, fnDoOnFullLine) => {
 };
 
 const startTask = task => new Promise((resolve, reject) => {
+  const exe = task.product.script_path;
   const opt = { cwd: task.working_dir };
-  const exe = path.resolve(task.product.script_path);
 
-  console.note('STARING: ', task.product.script_path);
+  console.note(`STARING: ${exe}`);
   console.debug(JSON.stringify({ opt }));
 
   const child = proc.exec(exe, opt);

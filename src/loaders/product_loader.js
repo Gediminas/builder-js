@@ -6,30 +6,32 @@ const configLoader = require('./config_loader.js');
 
 const cfgDef = configLoader.data.script_defaults;
 
-const load_cfg = (script_dir, product_id) => {
-  const cfgPath = path.normalize(script_dir + product_id + '/script.cfg');
-  const srvPath = path.normalize(script_dir + product_id + '/server.cfg');
-  const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
-  const srv = JSON.parse(fs.readFileSync(srvPath, 'utf8'));
-  const mrg = merge.recursive(true, cfgDef, cfg, srv);
-  if (!mrg.product_name) {
-    mrg.product_name = product_id;
-  }
-  return mrg;
-};
+// const load_cfg = (script_dir, product_id) => {
+//   const cfgPath = path.normalize(script_dir + product_id + '/script.cfg');
+//   const srvPath = path.normalize(script_dir + product_id + '/server.cfg');
+//   const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+//   const srv = JSON.parse(fs.readFileSync(srvPath, 'utf8'));
+//   const mrg = merge.recursive(true, cfgDef, cfg, srv);
+//   if (!mrg.product_name) {
+//     mrg.product_name = product_id;
+//   }
+//   return mrg;
+// };
 
 const loadProducts = (script_dir, on_loaded) => {
-  glob('*/recipe', { cwd: script_dir, matchBase: 1 }, (err, files) => {
+  glob('*', { cwd: script_dir, nodir: 1 }, (err, files) => {
     if (err) {
       return;
     }
     const products = files.map((file) => {
-      const product_id = path.dirname(file);
-      const cfg = load_cfg(script_dir, product_id);
+      console.note(file);
+      const product_id = file;
+      console.log(product_id);
+      // const cfg = load_cfg(script_dir, product_id);
       return {
         product_id,
-        product_name: cfg.product_name,
-        cfg,
+        product_name: product_id, // cfg.product_name,
+        // cfg,
         script_path : path.resolve(script_dir, file),
       };
     });

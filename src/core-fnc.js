@@ -12,8 +12,9 @@ const processFullLines = (origBuffer, fnDoOnFullLine) => {
 };
 
 const startTask = task => new Promise((resolve, reject) => {
-  const exe = task.product.script_path;
-  const opt = { cwd: task.working_dir };
+  const exe = task.product.script_path + '|tee xxxxx.log';
+  // const opt = { cwd: task.working_dir };
+  const opt = { cwd: "_scripts" };
 
   console.note(`STARING: ${exe}`);
   console.debug(JSON.stringify({ opt }));

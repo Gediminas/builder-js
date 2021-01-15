@@ -3,7 +3,7 @@
   "server_port":        "2020",
   "server_access":      "127.0.0.1",
   "show_history_limit": "5",
-  "script_dir":         "_scripts/recipies/",
+  "script_dir":         "_scripts/",
   "working_dir":        "_scripts/_working/",
   "maxWorkers":         2
 }

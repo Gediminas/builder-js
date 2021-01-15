@@ -24,28 +24,28 @@ exports.generateUid = () =>
   Math.floor(new Date().valueOf() / 1000) * 1000 + (++uidTail) % 1000
 
 exports.ensureDir = (dir) => {
-    if (typeof dir !== 'string') {
-        console.error('BAD DIR:', dir);
-        return dir;
-    }
-    return path
-        .resolve(dir)
-        .split(path.sep)
-        .reduce((acc, cur) => {
-            if (cur.includes(':')) {
-                return cur; // disk on windows
-            }
-            const currentPath = path.normalize(acc + path.sep + cur);
-            try {
-                fs.statSync(currentPath);
-            } catch (e) {
-                if (e.code === 'ENOENT') {
-                    console.log(`Creating folder ${currentPath}`);
-                    fs.mkdirSync(currentPath);
-                } else {
-                    console.error(`Cannot create folder ${dir}`, e);
-                }
-            }
-            return currentPath;
-        }, '');
+  if (typeof dir !== 'string') {
+    console.error('BAD DIR:', dir);
+    return dir;
+  }
+  return path
+    .resolve(dir)
+    .split(path.sep)
+    .reduce((acc, cur) => {
+      if (cur.includes(':')) {
+        return cur; // disk on windows
+      }
+      const currentPath = path.normalize(acc + path.sep + cur);
+      try {
+        fs.statSync(currentPath);
+      } catch (e) {
+        if (e.code === 'ENOENT') {
+          console.log(`Creating folder ${currentPath}`);
+          fs.mkdirSync(currentPath);
+        } else {
+          console.error(`Cannot create folder ${dir}`, e);
+        }
+      }
+      return currentPath;
+    }, '');
 };

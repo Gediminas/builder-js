@@ -19,13 +19,13 @@ const cfgDef = configLoader.data.script_defaults;
 // };
 
 const loadProducts = (script_dir, on_loaded) => {
-  glob('*', { cwd: script_dir, nodir: 1 }, (err, files) => {
+  glob('*.rcpt', { cwd: script_dir }, (err, files) => {
     if (err) {
       return;
     }
     const products = files.map((file) => {
       console.note(file);
-      const product_id = file;
+      const product_id = path.basename(file, '.rcpt');
       console.log(product_id);
       // const cfg = load_cfg(script_dir, product_id);
       return {

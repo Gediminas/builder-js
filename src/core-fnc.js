@@ -12,7 +12,7 @@ const processFullLines = (origBuffer, fnDoOnFullLine) => {
 };
 
 const startTask = task => new Promise((resolve, reject) => {
-  const exe = `env ${task.product.script_path} | tee main_web.log`;
+  const exe = `env ${task.product.script_path} | ../../../bin/predate.sh | tee main_web.log`;
   const opt = { cwd: task.working_dir };
 
   console.note(`STARING: ${exe}`);

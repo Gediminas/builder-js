@@ -4,6 +4,7 @@
   "server_access":      "127.0.0.1",
   "show_history_limit": "5",
   "script_dir":         "_scripts/recipies",
+  "tools_dir":          "_scripts/bin",
   "working_dir":        "_scripts/_working",
   "maxWorkers":         2
 }

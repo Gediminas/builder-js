@@ -45,11 +45,10 @@ pool.on('task-starting', (param) => {
 
   console.log(`>> task_uid: ${param.task.uid}`);
   console.log(`>> time_start: ${param.task.time_start}`);
-  console.log(`>> dir: ${dir}`);
 
-  sys.ensureDir(dir);
-
-  param.task.working_dir = dir;
+  // console.log(`>> dir: ${dir}`);
+  // sys.ensureDir(dir);
+  // param.task.working_dir = dir;
 });
 
 // pool.on('task-started', (param) => {

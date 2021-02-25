@@ -14,7 +14,7 @@ const processFullLines = (origBuffer, fnDoOnFullLine) => {
 const startTask = task => new Promise((resolve, reject) => {
   // const exe = `env ${task.product.script_path} 2>&1 | tee ../0000_web.log`;
   // const opt = { cwd: task.working_dir };
-  const exe = `env ./build ${task.product_id}`;
+  const exe = `env ./build ${task.product_id} debug`;
   const opt = { cwd: path.resolve('_scripts') };
 
   console.note(`STARING: ${exe}`);
